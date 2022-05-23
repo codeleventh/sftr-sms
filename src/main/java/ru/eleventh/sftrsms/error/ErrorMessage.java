@@ -14,6 +14,7 @@ public enum ErrorMessage {
     WRONG_FORMAT("Request data is invalid"),
     WRONG_USER("The user id is wrong"),
     WRONG_CODE("The code is wrong"),
+    NO_MORE_TRIES("Too many attempts"),
     ALREADY_HAVE("The code for the phone number was already send"),
     NO_NUMBER_STORED("The confirmation was not expected for this phone number");
 

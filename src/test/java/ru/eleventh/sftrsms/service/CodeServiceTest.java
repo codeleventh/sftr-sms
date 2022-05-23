@@ -81,7 +81,17 @@ class CodeServiceTest {
         val wrongCode = "wrong code";
         val wrongCodeException = assertThrows(BusinessException.class, () -> codeService.verifyCode(wrongCode, number, userId));
         assertEquals(ErrorMessage.WRONG_CODE.getMessage(), wrongCodeException.getMessage());
-        verify(store).remove(number);
+    }
+
+    @Test
+    void verifyCode_triesAreUsed() {
+        val tries = 0;
+        val confirmationState = new ConfirmationState(code, userId, tries, LocalDateTime.now());
+        when(store.get(number)).thenReturn(confirmationState);
+
+        val randomCode = "random code";
+        val wrongCodeException = assertThrows(BusinessException.class, () -> codeService.verifyCode(randomCode, number, userId));
+        assertEquals(ErrorMessage.NO_MORE_TRIES.getMessage(), wrongCodeException.getMessage());
     }
 
     @Test

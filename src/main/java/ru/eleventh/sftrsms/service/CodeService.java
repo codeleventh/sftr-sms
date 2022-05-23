@@ -39,7 +39,8 @@ public class CodeService {
             throw new BusinessException(ErrorMessage.WRONG_USER.getMessage());
         } else if (!code.equals(confirmationState.getCode())) {
             val tries = confirmationState.getTries();
-            if (tries <= 1) store.remove(phoneNumber);
+            if (tries <= 0)
+                throw new BusinessException(ErrorMessage.NO_MORE_TRIES.getMessage());
             else confirmationState.setTries(tries - 1);
 
             throw new BusinessException(ErrorMessage.WRONG_CODE.getMessage());
